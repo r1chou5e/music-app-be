@@ -1,7 +1,17 @@
+require("dotenv/config");
+
 const express = require("express");
 const app = express();
 
 const cors = require("cors");
+const { default: mongoose } = require("mongoose");
+
+// app.use(cors({ origin: true }));
+
+mongoose.connect(process.env.DB_STRING, { useNewUrlParser: true });
+mongoose.connection
+  .once("open", () => console.log("Connected to MongoDB !!"))
+  .on("error", (error) => console.log(`Error: ${error}`));
 
 const port = 4000;
 
@@ -10,5 +20,5 @@ app.listen(port, () => {
 });
 
 app.get("/", (req, res) => {
-    return res.json("Hi there...");
-})
+  return res.json("Hi there...");
+});
