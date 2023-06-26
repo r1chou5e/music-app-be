@@ -13,6 +13,10 @@ mongoose.connection
   .once("open", () => console.log("Connected to MongoDB !!"))
   .on("error", (error) => console.log(`Error: ${error}`));
 
+// user authentication route
+const userRoute = require("./routes/auth");
+app.use("/api/users/", userRoute);
+
 const port = 4000;
 
 app.listen(port, () => {
