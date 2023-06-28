@@ -30,4 +30,19 @@ router.get("/get/:id", async (req, res) => {
   }
 });
 
+router.get("/get-all", async (req, res) => {
+  const options = {
+    sort: {
+      createdAt: 1,
+    },
+  };
+
+  const data = await artist.find({}, null, options);
+  if (data) {
+    return res.status(200).send({ success: true, artist: data });
+  } else {
+    return res.status(400).send({ success: false, msg: "Artist not found." });
+  }
+});
+
 module.exports = router;
