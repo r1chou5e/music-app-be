@@ -12,7 +12,9 @@ router.post("/save", async (req, res) => {
 
   try {
     const savedArtist = await newArtist.save();
-    return res.status(200).send({ success: true, artist: savedArtist });
+    return res
+      .status(200)
+      .send({ success: true, msg: "Saved successfully.", artist: savedArtist });
   } catch (error) {
     return res.status(400).send({ success: false, msg: error });
   }
@@ -42,6 +44,23 @@ router.get("/get-all", async (req, res) => {
     return res.status(200).send({ success: true, artist: data });
   } else {
     return res.status(400).send({ success: false, msg: "Artist not found." });
+  }
+});
+
+router.delete("/delete/:id", async (req, res) => {
+  const filter = {
+    _id: req.params.id,
+  };
+
+  try {
+    const result = await artist.deleteOne(filter);
+    return res
+      .status(200)
+      .send({ success: true, msg: "Deleted successfully.", result: result });
+  } catch (error) {
+    return res
+      .status(400)
+      .send({ success: false, msg: "Failed to delete.", error: error });
   }
 });
 
