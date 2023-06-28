@@ -18,4 +18,16 @@ router.post("/save", async (req, res) => {
   }
 });
 
+router.get("/get/:id", async (req, res) => {
+  const filter = { _id: req.params.id };
+
+  const data = await artist.findOne(filter);
+
+  if (data) {
+    return res.status(200).send({ success: true, artist: data });
+  } else {
+    return res.status(400).send({ success: false, msg: "Artist not found." });
+  }
+});
+
 module.exports = router;
