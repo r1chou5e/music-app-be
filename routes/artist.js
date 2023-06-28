@@ -47,6 +47,48 @@ router.get("/get-all", async (req, res) => {
   }
 });
 
+router.put("/update/:id", async (req, res) => {
+  const filter = {
+    _id: req.params.id,
+  };
+
+  const options = {
+    new: true,
+  };
+
+  const update = {
+    name: req.body.name,
+    imageUrl: req.body.imageUrl,
+    twitter: req.body.twitter,
+    instagram: req.body.instagram,
+  };
+
+  try {
+    const updatedArtist = await artist.findOneAndUpdate(
+      filter,
+      update,
+      options
+    );
+
+    if (updatedArtist) {
+      return res.status(200).send({
+        success: true,
+        msg: "Updated Successfully.",
+        data: updatedArtist,
+      });
+    } else {
+      return res.status(400).send({
+        success: false,
+        msg: "Artist not found.",
+      });
+    }
+  } catch (error) {
+    return res
+      .status(400)
+      .send({ success: false, msg: "Failed to update.", error: error });
+  }
+});
+
 router.delete("/delete/:id", async (req, res) => {
   const filter = {
     _id: req.params.id,
