@@ -58,11 +58,7 @@ router.put("/update/:id", async (req, res) => {
   };
 
   try {
-    const updatedAlbum = await album.findOneAndUpdate(
-      filter,
-      update,
-      options
-    );
+    const updatedAlbum = await album.findOneAndUpdate(filter, update, options);
 
     if (updatedAlbum) {
       return res.status(200).send({
@@ -80,6 +76,23 @@ router.put("/update/:id", async (req, res) => {
     return res
       .status(400)
       .send({ success: false, msg: "Failed to update.", error: error });
+  }
+});
+
+router.delete("/delete/:id", async (req, res) => {
+  const filter = {
+    _id: req.params.id,
+  };
+
+  try {
+    const result = await album.deleteOne(filter);
+    return res
+      .status(200)
+      .send({ success: true, msg: "Deleted successfully.", result: result });
+  } catch (error) {
+    return res
+      .status(400)
+      .send({ success: false, msg: "Failed to delete.", error: error });
   }
 });
 
