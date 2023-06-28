@@ -41,7 +41,7 @@ router.get("/get-all", async (req, res) => {
 
   const data = await artist.find({}, null, options);
   if (data) {
-    return res.status(200).send({ success: true, artist: data });
+    return res.status(200).send({ success: true, artists: data });
   } else {
     return res.status(400).send({ success: false, msg: "Artist not found." });
   }
