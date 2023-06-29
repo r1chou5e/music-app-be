@@ -82,4 +82,20 @@ router.get("/get-all", async (req, res) => {
   }
 });
 
+router.put("/set-role/:id", async (req, res) => {
+  const filter = { _id: req.params.id };
+  const role = req.body.role;
+
+  const options = {
+    new: true,
+  };
+
+  try {
+    const result = await user.findOneAndUpdate(filter, { role }, options);
+    res.status(200).send({ success: true, user: result });
+  } catch (error) {
+    res.status(400).send({ success: false, msg: error });
+  }
+});
+
 module.exports = router;
